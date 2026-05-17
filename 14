@@ -1,0 +1,77 @@
+часткове застосування використано через bind, ми зафіксували tax, discount, rate, fee. Карування можна було б застосувати для функцій addTax, applyDiscount, convertCurrency, addFee. Для цього кейсу 
+зручніше bind, бо базові функції вже звичайні й не треба переписувати їх у карований вигляд.
+
+#include <iostream>
+#include <vector>
+#include <functional>
+
+using namespace std;
+
+double addTax(double price, double tax)
+{
+    return price * (1 + tax);
+}
+
+double applyDiscount(double price, double discount)
+{
+    return price * (1 - discount);
+}
+
+double convertCurrency(double price, double rate)
+{
+    return price * rate;
+}
+
+double addFee(double price, double fee)
+{
+    return price + fee;
+}
+
+vector<double> pipeline(
+    const vector<double>& prices,
+    const vector<function<double(double)>>& steps)
+{
+    vector<double> result;
+
+    for (double price : prices)
+    {
+        double current = price;
+
+        for (const auto& step : steps)
+        {
+            current = step(current);
+        }
+
+        result.push_back(current);
+    }
+
+    return result;
+}
+
+int main()
+{
+    vector<double> prices = {100, 250, 400, 999};
+
+    auto tax20 = bind(addTax, placeholders::_1, 0.20);
+    auto discount10 = bind(applyDiscount, placeholders::_1, 0.10);
+    auto usdToUah = bind(convertCurrency, placeholders::_1, 40.0);
+    auto fee50 = bind(addFee, placeholders::_1, 50.0);
+
+    vector<function<double(double)>> steps =
+    {
+        discount10,
+        tax20,
+        fee50,
+        usdToUah
+    };
+
+    vector<double> result = pipeline(prices, steps);
+
+    cout << "Фінальні ціни: ";
+    for (double price : result)
+    {
+        cout << price << " ";
+    }
+
+    return 0;
+}
