@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <functional>
+
+using namespace std;
+
+function<bool(int)> greaterThan(int limit)
+{
+    return [limit](int value)
+    {
+        return value > limit;
+    };
+}
+
+int main()
+{
+    auto greaterThan10 =
+        greaterThan(10);
+
+    auto greaterThan100 =
+        greaterThan(100);
+
+    vector<int> numbers =
+    {
+        5, 10, 15, 50, 100, 150
+    };
+
+    vector<int> filtered10;
+    vector<int> filtered100;
+
+    for (int x : numbers)
+    {
+        if (greaterThan10(x))
+        {
+            filtered10.push_back(x);
+        }
+    }
+
+    for (int x : numbers)
+    {
+        if (greaterThan100(x))
+        {
+            filtered100.push_back(x);
+        }
+    }
+
+    cout << "Більше 10: ";
+    for (int x : filtered10)
+    {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Більше 100: ";
+    for (int x : filtered100)
+    {
+        cout << x << " ";
+    }
+
+    return 0;
+}
