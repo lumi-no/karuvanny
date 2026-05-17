@@ -1,0 +1,39 @@
+простіше читається часткове застосування через bind, більше контролю дає карований варіант, ближчий до класичного FP — карований варіант. 
+#include <iostream>
+#include <functional>
+#include <cmath>
+
+using namespace std;
+
+double power(double base, double exponent)
+{
+    return pow(base, exponent);
+}
+
+function<double(double)> powerCurried(double exponent)
+{
+    return [exponent](double base)
+    {
+        return pow(base, exponent);
+    };
+}
+
+int main()
+{
+    auto squareCurried = powerCurried(2);
+    auto cubeCurried = powerCurried(3);
+
+    cout << squareCurried(5) << endl;
+    cout << cubeCurried(5) << endl;
+
+    auto squarePartial =
+        bind(power, placeholders::_1, 2);
+
+    auto cubePartial =
+        bind(power, placeholders::_1, 3);
+
+    cout << squarePartial(5) << endl;
+    cout << cubePartial(5) << endl;
+
+    return 0;
+}
