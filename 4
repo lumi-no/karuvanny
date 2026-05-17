@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <functional>
+
+using namespace std;
+
+function<int(int)> multiplyCurried(int a)
+{
+    return [a](int b)
+    {
+        return a * b;
+    };
+}
+
+int main()
+{
+    cout << multiplyCurried(2)(8) << endl;
+
+    cout << multiplyCurried(5)(6) << endl;
+
+    function<int(int)> doubleNumber =
+        multiplyCurried(2);
+
+    function<int(int)> triple =
+        multiplyCurried(3);
+
+    vector<int> numbers = {1, 2, 3, 4, 5};
+
+    vector<int> doubled;
+    vector<int> tripled;
+
+    for (int x : numbers)
+    {
+        doubled.push_back(doubleNumber(x));
+    }
+
+    for (int x : numbers)
+    {
+        tripled.push_back(triple(x));
+    }
+
+    cout << endl;
+
+    cout << "Подвоєні значення: ";
+    for (int x : doubled)
+    {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Потроєні значення: ";
+    for (int x : tripled)
+    {
+        cout << x << " ";
+    }
+
+    return 0;
+}
