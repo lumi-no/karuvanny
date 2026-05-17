@@ -1,0 +1,55 @@
+Часткове застосування (bind) працює зі звичайною функцією і просто фіксує частину аргументів. В карованому варіанті функція спочатку приймає один аргумент і повертає іншу функцію.
+#include <iostream>
+#include <functional>
+
+using namespace std;
+
+double applyDiscount(double price, double percent)
+{
+    return price * (1 - percent);
+}
+
+int main()
+{
+   
+    auto discount10 =
+        bind(applyDiscount,
+             placeholders::_1,
+             0.10);
+
+    auto discount20 =
+        bind(applyDiscount,
+             placeholders::_1,
+             0.20);
+
+    auto discount50 =
+        bind(applyDiscount,
+             placeholders::_1,
+             0.50);
+
+    double prices[] = {100, 250, 999};
+
+    cout << "Знижка 10%:" << endl;
+    for (double price : prices)
+    {
+        cout << discount10(price) << endl;
+    }
+
+    cout << endl;
+
+    cout << "Знижка 20%:" << endl;
+    for (double price : prices)
+    {
+        cout << discount20(price) << endl;
+    }
+
+    cout << endl;
+
+    cout << "Знижка 50%:" << endl;
+    for (double price : prices)
+    {
+        cout << discount50(price) << endl;
+    }
+
+    return 0;
+}
