@@ -1,0 +1,27 @@
+#include <iostream>
+#include <functional>
+
+using namespace std;
+
+double convert(double amount, double rate)
+{
+    return amount * rate;
+}
+
+int main()
+{
+    
+    auto usdToUah =
+        bind(convert, placeholders::_1, 40.0);
+
+    auto eurToUah =
+        bind(convert, placeholders::_1, 43.0);
+
+    cout << usdToUah(100) << endl;
+
+    cout << eurToUah(100) << endl;
+
+    cout << usdToUah(250) << endl;
+
+    return 0;
+}
