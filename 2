@@ -1,0 +1,18 @@
+.discount(price, percent) не є карованою. Функція приймає 2 аргументи за один виклик. Карований варіант: function<double(double)> 
+discountCurried(double percent)  
+{ return [percent](double price) 
+{ return price * (1 - percent); }; } 
+Часткове застосування discount10(price) 
+Фіксація: percent = 0.10  
+convert(amount, rate) не є карованою. Приймає 2 аргументи одразу. 
+Карований варіант  
+function<double(double)> convertCurried(double rate) 
+{ return [rate](double amount) { return amount * rate; }; } 
+Часткове застосування usdToUah(amount)  
+Фікссація: rate = 40  
+greet(greeting, name) не є карованою. Приймає 2 аргументи за один 
+виклик. Карований варіант  
+function<string(string)> greetCurried(string greeting)  
+{ return [greeting](string name) { return greeting + ", " + name + "!"; }; } 
+Часткове застосування sayHello(name) 
+Фіксація: greeting = "Hello" 
