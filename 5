@@ -1,0 +1,30 @@
+#include <iostream>
+#include <functional>
+
+using namespace std;
+
+function<function<int(int)>(int)> volumeCurried(int length)
+{
+    return [length](int width)
+    {
+        return [length, width](int height)
+        {
+            return length * width * height;
+        };
+    };
+}
+
+int main()
+{
+ 
+    cout << volumeCurried(2)(3)(4) << endl;
+
+    function<int(int)> boxBase =
+        volumeCurried(2)(5);
+
+    cout << boxBase(10) << endl;
+
+    cout << boxBase(20) << endl;
+
+    return 0;
+}
