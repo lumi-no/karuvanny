@@ -1,0 +1,28 @@
+Чим partial application відрізняється від currying, часткове застосування, він бере звичайну функцію, фіксує частину аргументів, повертає нову функцію. 
+Карування перетворює функцію з багатьма аргументами у ланцюжок функцій по одному аргументу.
+
+#include <iostream>
+#include <functional>
+
+using namespace std;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+ 
+    auto add5 =
+        bind(add, 5, placeholders::_1);
+
+    auto add10 =
+        bind(add, 10, placeholders::_1);
+
+    cout << add5(3) << endl;
+
+    cout << add10(7) << endl;
+
+    return 0;
+}
