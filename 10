@@ -1,0 +1,39 @@
+#include <iostream>
+#include <functional>
+#include <string>
+
+using namespace std;
+
+string logMessage(string level, string message)
+{
+    return "[" + level + "] " + message;
+}
+
+int main()
+{
+    auto logInfo =
+        bind(logMessage,
+             "INFO",
+             placeholders::_1);
+
+    auto logWarning =
+        bind(logMessage,
+             "WARNING",
+             placeholders::_1);
+
+    auto logError =
+        bind(logMessage,
+             "ERROR",
+             placeholders::_1);
+
+    cout << logInfo("Application started")
+         << endl;
+
+    cout << logWarning("Disk space is low")
+         << endl;
+
+    cout << logError("Cannot connect to database")
+         << endl;
+
+    return 0;
+}
