@@ -1,0 +1,37 @@
+#include <iostream>
+#include <functional>
+#include <string>
+
+using namespace std;
+
+function<function<string(string)>(string)>
+formatMessage(string prefix)
+{
+    return [prefix](string suffix)
+    {
+        return [prefix, suffix](string text)
+        {
+            return prefix + text + suffix;
+        };
+    };
+}
+
+int main()
+{
+    auto htmlBold =
+        formatMessage("<b>")("</b>");
+
+    auto markdownBold =
+        formatMessage("**")("**");
+
+    auto brackets =
+        formatMessage("(")(")");
+
+    cout << htmlBold("Python") << endl;
+
+    cout << markdownBold("FP") << endl;
+
+    cout << brackets("Currying") << endl;
+
+    return 0;
+}
