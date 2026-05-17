@@ -1,0 +1,14 @@
+from functools import partial 
+def multiply(a, b): 
+return a * b 
+double = partial(multiply, 2) 
+Це часткове застосування. Тут використовується partial, який фіксує 
+перший аргумент a = 2 і створює нову функцію double(b). 
+def multiply_curried(a): 
+return lambda b: a * b 
+Це карування. Функція приймає один аргумент a і повертає нову функцію 
+для аргументу b. 
+def add(a, b): 
+return a + b 
+Це ні карування, ні часткове застосування. Це звичайна функція, яка 
+приймає два аргументи одразу. 
